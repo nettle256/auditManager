@@ -1,0 +1,36 @@
+& {
+  height: 100%;
+}
+
+.sign-main {
+  text-align: center;
+  white-space: nowrap;
+  height: 100%;
+  min-height: 400px;
+}
+
+.sign-box {
+  margin: auto;
+  width: 400px;
+  min-height: 400px;
+  display: inline-block;
+  vertical-align: middle;
+  .mdui-tab-active {
+    color: @accent!important;
+  }
+  .mdui-tab-indicator {
+    background: @accent!important;
+  }
+  .sign-form {
+    margin-top: 10px;
+    text-align: left;
+    button {
+      margin-top: 32px;
+    }
+    .sign-message {
+      color: @error;
+      text-align: center;
+    }
+  }
+
+}

@@ -1,0 +1,111 @@
+.btn-group {
+  padding-left: 8px;
+  margin-bottom: 8px;
+}
+
+.mdui-row {
+  padding: 10px 0;
+  button {
+    margin-left: 8px;
+  }
+}
+
+.theme-tree {
+  .tree-node {
+    height: 50px;
+    width: 500px;
+    border: 1px solid grey;
+
+    font-size: 14px;
+    line-height: 24px;
+    color: rgba(0,0,0,.87);
+
+    position: relative;
+    box-sizing: border-box;
+    padding: 12px 12px;
+    margin: 8px 0;
+    text-align: left;
+    vertical-align: middle;
+
+    .node-tools {
+      display: none;
+      position: absolute;
+      right: 12px;
+      top: 6px;
+    }
+    &:hover {
+      background-color: #efefef;
+      .node-tools {
+        display: block;
+      }
+    }
+  }
+  .unmodifiable {
+    border-color: @theme;
+    color: @accent
+  }
+  .tree-child {
+    position: relative;
+    &:before {
+      position: absolute;
+      border-left: 1px solid grey;
+      top: -8px;
+      bottom: 25px;
+      left: 25px;
+      width: 1px;
+      content: '';
+    }
+    .tree-node {
+      margin-left: 50px;
+      .node-name {
+        cursor: default;
+      }
+      &:before {
+        z-index: 500;
+        position: absolute;
+        border-top: 1px solid grey;
+        top: 24px;
+        left: -26px;
+        width: 25px;
+        height: 1px;
+        content: '';
+      }
+    }
+  }
+}
+
+#create_theme_dialog {
+  .mdui-row {
+    margin: 0px;
+  }
+  .warning-info {
+    cursor: default;
+    height: 36px;
+    border-radius: 2px;
+    border: 1px solid @error;
+    line-height: 36px;
+    padding: 0 8px;
+    margin: 0 -4px;
+  }
+}
+
+.btn-group-in-row {
+  margin-top: 5px;
+  //padding-right: 93px;
+  position: relative;
+  .btn-select {
+    border: 1px solid grey;
+    width: 100%;
+    padding-left: 5px;
+    text-transform: none;
+  }
+  .btn-view {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}
+
+
+.theme-type {
+}

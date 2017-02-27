@@ -1,0 +1,115 @@
+<div id="theme">
+    <h3>栏目<small>　增加、删除、修改导航栏</small></h3>
+    <hr />
+    <div class="mdui-row btn-group">
+        <button class="mdui-btn mdui-ripple mdui-color-theme" mdui-dialog="{target: '#create_theme_dialog', modal: true}" ng-click="clearNewTheme(null)">
+            <i class="mdui-icon material-icons">add</i>&nbsp;增加新栏目
+        </button>
+    </div>
+    <div class="theme-tree">
+        <div ng-repeat="theme in themeTree" ng-if="!theme.deleted">
+            <div class="tree-node" ng-class="{true: 'unmodifiable'}[theme.unmodifiable]">
+                <div class="node-name">{{theme.name}}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;{{moduleName[theme.module] || '特殊页面'}}</div>
+                <div class="node-tools" ng-if="!theme.unmodifiable">
+                    <button class="mdui-btn mdui-btn-icon mdui-ripple novel-config" mdui-tooltip="{content:'新建子栏目'}"
+                            mdui-dialog="{target: '#create_theme_dialog', modal: true}"
+                            ng-click="clearNewTheme(theme)">
+                        <i class="mdui-icon material-icons">add</i>
+                    </button>
+                    <button class="mdui-btn mdui-btn-icon mdui-ripple novel-config" mdui-tooltip="{content:'编辑名称'}"
+                            mdui-dialog="{target: '#edit_theme_dialog', modal: true}"
+                            ng-click="edit(theme)">
+                        <i class="mdui-icon material-icons">edit</i>
+                    </button>
+                    <button class="mdui-btn mdui-btn-icon mdui-ripple novel-config" mdui-tooltip="{content:'删除该栏目'}"
+                        ng-click="deleteTheme(theme)">
+                        <i class="mdui-icon material-icons">delete</i>
+                    </button>
+                </div>
+            </div>
+            <div class="tree-child">
+                <div ng-repeat="theme in theme.child" ng-if="!theme.deleted">
+                    <div class="tree-node">
+                        <div class="node-name">{{theme.name}}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;{{moduleName[theme.module]}}</div>
+                        <div class="node-tools" ng-if="!theme.unmodifiable">
+                            <button class="mdui-btn mdui-btn-icon mdui-ripple novel-config" mdui-tooltip="{content:'编辑名称'}"
+                                    mdui-dialog="{target: '#edit_theme_dialog', modal: true}"
+                                    ng-click="edit(theme)">
+                                <i class="mdui-icon material-icons">edit</i>
+                            </button>
+                            <button class="mdui-btn mdui-btn-icon mdui-ripple novel-config" mdui-tooltip="{content:'删除该栏目'}"
+                                    ng-click="deleteTheme(theme)">
+                                <i class="mdui-icon material-icons">delete</i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mdui-dialog" id="create_theme_dialog">
+        <div class="mdui-dialog-title">新建栏目</div>
+        <div class="mdui-dialog-content">
+            <form name="newThemeForm" role="form">
+                <div class="mdui-row">
+                    <div class="mdui-textfield">
+                        <label class="mdui-textfield-label">栏目名称</label>
+                        <input class="mdui-textfield-input" type="text" ng-model="newTheme.name" required="true" maxlength="16"/>
+                        <div class="mdui-textfield-error">栏目名称不能为空</div>
+                    </div>
+                </div>
+
+                <div class="mdui-row"  style="margin-top: -20px;">
+                    <div class="mdui-textfield">
+                        <label class="mdui-textfield-label">模板选择</label>
+                        <div class="btn-group-in-row">
+                            <select class="mdui-btn mdui-ripple mdui-color-white btn-select" ng-model="newTheme.module" ng-options="mod.id as mod.name for mod in modules"></select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mdui-row"  style="margin-top: -20px;" ng-if="newTheme.fatherObject">
+                    <div class="mdui-textfield">
+                        <label class="mdui-textfield-label">父栏目名称</label>
+                        <input class="mdui-textfield-input" type="text" ng-model="newTheme.fatherObject.name" disabled=""/>
+                        <div class="mdui-textfield-error"></div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="mdui-dialog-actions">
+            <button class="mdui-btn mdui-ripple" mdui-dialog-cancel="">取消</button>
+            <button class="mdui-btn mdui-ripple" ng-disabled="newThemeForm.$invalid || !newThemeForm.$dirty" ng-click="createTheme()" mdui-dialog-close="">提交</button>
+        </div>
+    </div>
+
+    <div class="mdui-dialog" id="edit_theme_dialog">
+        <div class="mdui-dialog-title">编辑栏目 {{editTheme.name}}</div>
+        <div class="mdui-dialog-content">
+            <form name="editThemeForm" role="form">
+                <div class="mdui-row">
+                    <div class="mdui-textfield">
+                        <label class="mdui-textfield-label">栏目名称</label>
+                        <input class="mdui-textfield-input" type="text" ng-model="editTheme.newName" required="true" maxlength="16"/>
+                        <div class="mdui-textfield-error">栏目名称不能为空</div>
+                    </div>
+                </div>
+
+                <div class="mdui-row"  style="margin-top: -20px;">
+                    <div class="mdui-textfield">
+                        <label class="mdui-textfield-label">模板选择</label>
+                        <div class="btn-group-in-row">
+                            <select class="mdui-btn mdui-ripple mdui-color-white btn-select" ng-model="editTheme.newModule" ng-options="mod.id as mod.name for mod in modules"></select>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="mdui-dialog-actions">
+            <button class="mdui-btn mdui-ripple" mdui-dialog-cancel="">取消</button>
+            <button class="mdui-btn mdui-ripple" ng-disabled="editThemeForm.$invalid || !editThemeForm.$dirty" ng-click="updateTheme()" mdui-dialog-close="">提交</button>
+        </div>
+    </div>
+
+</div>

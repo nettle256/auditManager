@@ -1,0 +1,40 @@
+<div id="profile">
+    <h3>修改密码</h3>
+    <hr />
+    <form name="userForm" role="form">
+        <div class="mdui-row">
+            <div class="mdui-textfield mdui-col-sm-4">
+                <label class="mdui-textfield-label">用户名</label>
+                <input class="mdui-textfield-input" type="text" ng-model="currentUser.username" disabled=""/>
+                <div class="mdui-textfield-error"></div>
+            </div>
+        </div>
+        <div class="mdui-row">
+            <div class="mdui-textfield mdui-col-sm-4">
+                <label class="mdui-textfield-label">原密码</label>
+                <input class="mdui-textfield-input" type="password" ng-model="pwd.oldPassword" required="true"/>
+                <div class="mdui-textfield-error">原密码不能为空</div>
+            </div>
+        </div>
+        <div class="mdui-row">
+            <div class="mdui-textfield mdui-col-sm-4">
+                <label class="mdui-textfield-label">新密码</label>
+                <input class="mdui-textfield-input" type="password" ng-model="pwd.newPassword" minlength="6" maxlength="16" required="true" ng-change="checkPasswordSame()"/>
+                <div class="mdui-textfield-error">密码长度为6至16位</div>
+            </div>
+        </div>
+        <div class="mdui-row" ng-class="{false: 'mdui-textfield-invalid'}[isPasswordSame]">
+            <div class="mdui-textfield mdui-col-sm-4">
+                <label class="mdui-textfield-label">确认密码</label>
+                <input class="mdui-textfield-input" type="password" ng-model="pwd.repeatPassword" ng-change="checkPasswordSame()"/>
+                <div class="mdui-textfield-error">两次输入的密码不同</div>
+            </div>
+        </div>
+        <div class="mdui-row btn-group">
+            <button class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme"
+                    ng-disabled="userForm.$invalid || !userForm.$dirty || saving || !isPasswordSame" ng-click="save()">
+                {{'提交' + (saving ? '中' : '')}}
+            </button>
+        </div>
+    </form>
+</div>

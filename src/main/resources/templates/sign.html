@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <title>Audit Manager</title>
+    <div th:include="fragment/header :: lib"></div>
+</head>
+<body id="sign" ng-app="signApp" ng-controller="signCtrl" class="mdui-theme-primary-blue mdui-theme-accent-blue">
+<div class="sign-main mdui-valign">
+    <div class="sign-box">
+        <div class="mdui-typo-display-2-opacity">开州区审计局</div>
+        <div class="mdui-typo-display-2-opacity">门户网站管理端</div>
+        <form id="sign-in" class="sign-form mdui-p-x-2" name="signInForm" role="form">
+            <div class="mdui-textfield">
+                <i class="mdui-icon material-icons">&#xe853;</i>
+                <input class="mdui-textfield-input" type="text" placeholder="用户名" ng-model="user.username"
+                       required="true"/>
+            </div>
+            <div class="mdui-textfield">
+                <i class="mdui-icon material-icons">&#xe0da;</i>
+                <input class="mdui-textfield-input" type="password" placeholder="密码" ng-model="user.password"
+                       required="true"/>
+            </div>
+            <div class="mdui-textfield" ng-if="message">
+                <div class="sign-message" ng-bind="message"></div>
+            </div>
+            <button class="mdui-btn mdui-ripple mdui-btn-raised mdui-color-theme-accent mdui-btn-block" style="margin-top: 20px;"
+                    ng-disabled="signInForm.$invalid" ng-click="signIn()">
+                登录
+            </button>
+        </form>
+    </div>
+</div>
+<footer>
+    <div th:include="fragment/footer :: lib"></div>
+    <script type="text/javascript" src="js/sign-ctrl.js"></script>
+</footer>
+</body>
+</html>

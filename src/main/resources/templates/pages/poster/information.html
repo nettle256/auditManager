@@ -1,0 +1,60 @@
+<div id="information">
+    <h3>模块信息<small>　管理内容固定的信息页面</small></h3>
+    <hr />
+    <div class="mdui-row">
+        <div class="mdui-textfield mdui-col-sm-4" style="padding-top: 0px;padding-left: 0px;">
+            <i class="mdui-icon material-icons mdui-text-color-theme">&#xe8b6;</i>
+            <input class="mdui-textfield-input" type="text" placeholder="查找模块" ng-model="keyword"/>
+            <button class="mdui-btn mdui-btn-icon tool-btn pull-right" ng-show="keyword &amp;&amp; keyword.length" ng-click="keyword = '';" mdui-tooltip="{position: 'right',content: '清空关键字'}"
+                    style="position: absolute;right: 0;top: 0;">
+                <i class="mdui-icon material-icons" style="padding: 0px">&#xe5cd;</i>
+            </button>
+        </div>
+        <button class="mdui-btn mdui-ripple mdui-color-theme" ui-sref="module_new">
+            <i class="mdui-icon material-icons">add</i>&nbsp;增加新模块
+        </button>
+    </div>
+    <div class="mdui-table-fluid mdui-shadow-0 mdui-col-sm-8">
+        <table class="mdui-table mdui-table-hoverable">
+            <thead>
+                <tr class="mdui-text-color-theme">
+                    <th>编号</th>
+                    <th>模块名称</th>
+                    <th>最后更新时间</th>
+                    <!--<th>模块描述</th>-->
+                    <th style="width: 130px;text-align: center;"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="mod in mods | filter:{name:keyword}" ng-if="!mod.deleted" mdui-dialog="{target: '#show_mod_dialog'}" ng-click="showMod(mod)">
+                    <td ng-bind="mod.id"></td>
+                    <td ng-bind="mod.name"></td>
+                    <td>{{(mod.updated | date:'yyyy-MM-dd HH:mm:ss') || '无记录'}}</td>
+                    <td>
+                        <div  class="user-control">
+                            <button class="mdui-btn mdui-btn-icon mdui-ripple novel-config" title="编辑该模块"
+                                    ui-sref="module_edit({id: mod.id})">
+                                <i class="mdui-icon material-icons">edit</i>
+                            </button>
+                            <button class="mdui-btn mdui-btn-icon mdui-ripple novel-config" title="删除该模块"
+                                    ng-click="deleteMod(mod)">
+                                <i class="mdui-icon material-icons">delete</i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mdui-dialog" id="show_mod_dialog">
+        <div class="mdui-dialog-title" ng-bind="mod.name"></div>
+        <div class="mdui-dialog-content" style="min-height: 500px;">
+            <div ng-if="ready" ng-bind-html="sce.trustAsHtml(mod.content)">
+            </div>
+            <div ng-if="!ready">
+                载入中...
+            </div>
+        </div>
+    </div>
+</div>

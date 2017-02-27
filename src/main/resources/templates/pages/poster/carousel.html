@@ -1,0 +1,51 @@
+<div id="carousel">
+    <h3>滚动图片<small>　设置首页滚动轮播的图片内容</small></h3>
+    <hr />
+    <div class="mdui-row">
+        <div class="mdui-btn mdui-ripple mdui-color-theme" mdui-tooltip="{content:'图片大小不超过10MB', position: 'right'}"
+            ngf-select="upload($file)" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="10MB" ng-disabled="uploading">
+            <div ng-if="!uploading"><i class="mdui-icon material-icons">file_upload</i>&nbsp;上传图片</div>
+            <div ng-if="uploading"><i class="mdui-icon material-icons">file_upload</i>&nbsp;上传进度: {{progress}}%</div>
+        </div>
+    </div>
+    <div class="carousel-list">
+        <div class="carousel mdui-shadow-4" ng-repeat="carousel in carousels" ng-if="!carousel.deleted" >
+            <img ng-src="{{carousel.imageUrl}}" title="点击可查看大图"  mdui-dialog="{target: '#big_picture'}" ng-click="setDetail(carousel)"/>
+            <div class="btn-group">
+                <button class="mdui-btn mdui-btn-icon mdui-ripple" mdui-tooltip="{content:'删除该图片', position: 'left'}"
+                        ng-click="deleteCarousel(carousel)">
+                    <i class="mdui-icon material-icons">delete</i>
+                </button>
+            </div>
+            <div class="mdui-row">
+                <div class="mdui-textfield" style="width: 500px;">
+                    <label class="mdui-textfield-label">播放序号</label>
+                    <input class="mdui-textfield-input" type="text" placeholder="图片播放顺序，为空时默认为最先播放"
+                           ng-model="carousel.index" ng-blur="save(carousel)" ng-focus="saveOld(carousel)"/>
+                </div>
+            </div>
+
+            <div class="mdui-row">
+                <div class="mdui-textfield">
+                    <label class="mdui-textfield-label">图片描述</label>
+                    <input class="mdui-textfield-input" type="text" placeholder="图片播放时显示的文字，字数不超过30字" maxlength="30"
+                           ng-model="carousel.text"  ng-blur="save(carousel)"  ng-focus="saveOld(carousel)"/>
+                </div>
+            </div>
+
+            <div class="mdui-row">
+                <div class="mdui-textfield">
+                    <label class="mdui-textfield-label">关联文章</label>
+                    <input class="mdui-textfield-input" type="text" placeholder="点击图片时跳转到制定的文章页面"
+                           ng-model="carousel.connect"/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mdui-dialog" id="big_picture" style="max-width: 800px; max-height: 600px;">
+        <div class="mdui-dialog-content" style="padding: 0px; max-width: 800px; overflow: hidden; text-align: center;">
+            <img src="{{showImage}}" style="max-width: 100%; max-height: 100%;"/>
+        </div>
+    </div>
+</div>

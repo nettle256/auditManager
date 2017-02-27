@@ -1,0 +1,47 @@
+@carousel-height: 240px;
+@carousel-img-width: 320px;
+
+.mdui-row {
+  padding: 10px 0;
+  .mdui-btn {
+    margin-left: 8px;
+  }
+}
+
+.carousel-list {
+  .carousel {
+    margin: 10px 0;
+    position: relative;
+    height: @carousel-height;
+    width: 800px;
+    padding: 0 10px 0 @carousel-img-width + 10;
+    img {
+      cursor: zoom-in;
+      position: absolute;
+      top: 0;
+      left: 0;
+      border: 1px solid grey;
+      height: @carousel-height - 2;
+      width: @carousel-img-width - 2;
+    }
+    .mdui-row {
+      padding: 0;
+      margin: 0;
+    }
+    .btn-group {
+      display: none;
+      position: absolute;
+      right: 12px;
+      top: 12px;
+      padding-left: 8px;
+      margin-bottom: 8px;
+    }
+    &:hover .btn-group {
+      display: block;
+    }
+    .mdui-btn {
+      display: block;
+      margin-bottom: 12px;
+    }
+  }
+}

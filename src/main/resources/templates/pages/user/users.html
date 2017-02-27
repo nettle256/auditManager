@@ -1,0 +1,116 @@
+<div id="users">
+    <h3>用户管理<small>　增加、删除、修改用户信息</small></h3>
+    <hr />
+    <div class="mdui-row">
+        <div class="mdui-textfield mdui-col-sm-4" style="padding-top: 0px;padding-left: 0px;">
+            <i class="mdui-icon material-icons mdui-text-color-theme">&#xe8b6;</i>
+            <input class="mdui-textfield-input" type="text" placeholder="查找用户" ng-model="keyword"/>
+            <button class="mdui-btn mdui-btn-icon tool-btn pull-right" ng-show="keyword &amp;&amp; keyword.length" ng-click="keyword = '';" mdui-tooltip="{position: 'right',content: '清空关键字'}"
+                    style="position: absolute;right: 0;top: 0;">
+                <i class="mdui-icon material-icons" style="padding: 0px">&#xe5cd;</i>
+            </button>
+        </div>
+        <button class="mdui-btn mdui-ripple mdui-color-theme" mdui-dialog="{target: '#create_user_dialog', modal: true}" ng-click="clearNewUser()">
+            <i class="mdui-icon material-icons">person_add</i>&nbsp;增加新用户
+        </button>
+        <button class="mdui-btn mdui-ripple mdui-color-theme" mdui-menu="{target: '#user_filter_menu', covered: false}">
+            <i class="mdui-icon material-icons">filter_list</i>&nbsp;筛选用户
+        </button>
+        <ul class="mdui-menu" id="user_filter_menu">
+            <li class="mdui-menu-item">
+                <a class="mdui-ripple" ng-click="setFilter('undeleted')">仅显示正常用户</a>
+            </li>
+            <li class="mdui-menu-item">
+                <a class="mdui-ripple" ng-click="setFilter('deleted')">仅显示删除用户</a>
+            </li>
+            <li class="mdui-menu-item">
+                <a class="mdui-ripple" ng-click="setFilter('all')">显示所有用户</a>
+            </li>
+        </ul>
+    </div>
+    <div class="mdui-table-fluid mdui-shadow-0 mdui-col-sm-8">
+        <table class="mdui-table mdui-table-hoverable">
+            <thead>
+            <tr class="mdui-text-color-theme">
+                <th>编号</th>
+                <th>用户名</th>
+                <th>权限控制</th>
+                <th>上次登录时间</th>
+                <th style="width: 130px;text-align: center;"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="user in users | filter:{username:keyword} | filter:filterCondition" ng-class="{true: 'del'}[user.deleted]">
+                <td ng-bind="user.id"></td>
+                <td ng-bind="user.username"></td>
+                <td>
+                    <label class="mdui-checkbox">
+                        <input type="checkbox" ng-model="user.articleSystem" ng-change="updateAuthority(user, 'articleSystem')"/>
+                        <i class="mdui-checkbox-icon"></i>
+                        发布管理文章
+                    </label>
+                    <label class="mdui-checkbox">
+                        <input type="checkbox" ng-model="user.posterSystem" ng-change="updateAuthority(user, 'posterSystem')"/>
+                        <i class="mdui-checkbox-icon"></i>
+                        修改管理信息
+                    </label>
+                </td>
+                <td>{{(user.lastVisit | date:'yyyy-MM-dd HH:mm:ss') || '无记录'}}</td>
+                <td>
+                    <div  class="user-control">
+                        <button class="mdui-btn mdui-btn-icon mdui-ripple novel-config" mdui-tooltip="{content:'重置该用户密码', position: 'left'}"
+                            ng-click="resetPassword(user)">
+                            <i class="mdui-icon material-icons">vpn_key</i>
+                        </button>
+                        <button ng-if="!user.deleted" class="mdui-btn mdui-btn-icon mdui-ripple novel-config" mdui-tooltip="{content:'删除该用户', position: 'right'}"
+                                ng-click="deleteUser(user)">
+                            <i class="mdui-icon material-icons">delete</i>
+                        </button>
+                        <button ng-if="user.deleted" class="mdui-btn mdui-btn-icon mdui-ripple novel-config" mdui-tooltip="{content:'恢复该用户', position: 'right'}"
+                                ng-click="recoverUser(user)">
+                            <i class="mdui-icon material-icons">replay</i>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mdui-dialog" id="create_user_dialog">
+        <div class="mdui-dialog-title">新建用户</div>
+        <div class="mdui-dialog-content">
+            <form name="newUserForm" role="form">
+                <div class="mdui-row">
+                    <div class="mdui-textfield">
+                        <label class="mdui-textfield-label">用户名</label>
+                        <input class="mdui-textfield-input" type="text" ng-model="newUser.username" required="true"/>
+                        <div class="mdui-textfield-error">用户名不能为空</div>
+                    </div>
+                </div>
+                <div class="mdui-row" style="margin-top: -20px;">
+                    <div class="mdui-textfield">
+                        <label class="mdui-textfield-label">权限控制</label>
+                        <label class="mdui-checkbox">
+                            <input type="checkbox" ng-model="newUser.articleSystem"/>
+                            <i class="mdui-checkbox-icon"></i>
+                            发布管理文章
+                        </label>
+                        <label class="mdui-checkbox">
+                            <input type="checkbox" ng-model="newUser.posterSystem"/>
+                            <i class="mdui-checkbox-icon"></i>
+                            修改管理信息
+                        </label>
+                    </div>
+                </div>
+                <div class="warning-info mdui-color-pink-100 mdui-text-color-pink">
+                    <i class="mdui-icon material-icons">&#xe002;</i>注意：新建用户的默认密码为用户名
+                </div>
+            </form>
+        </div>
+        <div class="mdui-dialog-actions">
+            <button class="mdui-btn mdui-ripple" mdui-dialog-cancel="">取消</button>
+            <button class="mdui-btn mdui-ripple" ng-disabled="newUserForm.$invalid || !newUserForm.$dirty" ng-click="createUser()" mdui-dialog-close="">提交</button>
+        </div>
+    </div>
+</div>
