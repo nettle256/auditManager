@@ -17,8 +17,10 @@ public class News {
 
     private Long updated;
 
+    @Lob
     private String images;
 
+    @Lob
     private String attachments;
 
     private Long articleId;

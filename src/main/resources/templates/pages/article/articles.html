@@ -1,4 +1,77 @@
 <div id="articles">
     <h3>文章<small>　发布、管理文章</small></h3>
     <hr />
+    <div class="mdui-row">
+        <div class="mdui-textfield mdui-col-sm-4" style="padding-top: 0px;padding-left: 0px;">
+            <i class="mdui-icon material-icons mdui-text-color-theme">&#xe8b6;</i>
+            <input class="mdui-textfield-input" type="text" placeholder="查找文章" ng-model="keyword"/>
+            <button class="mdui-btn mdui-btn-icon tool-btn pull-right" ng-show="keyword &amp;&amp; keyword.length" ng-click="keyword = '';" mdui-tooltip="{position: 'right',content: '清空关键字'}"
+                    style="position: absolute;right: 0;top: 0;">
+                <i class="mdui-icon material-icons" style="padding: 0px">&#xe5cd;</i>
+            </button>
+        </div>
+        <button class="mdui-btn mdui-ripple mdui-color-theme" ui-sref="article_new">
+            <i class="mdui-icon material-icons">add</i>&nbsp;增加新文章
+        </button>
+        <button class="mdui-btn mdui-ripple mdui-color-theme" mdui-menu="{target: '#article_filter_menu', covered: false}">
+            <i class="mdui-icon material-icons">filter_list</i>&nbsp;筛选文章
+        </button>
+        <ul class="mdui-menu" id="article_filter_menu">
+            <li class="mdui-menu-item">
+                <a class="mdui-ripple" ng-click="setDeleteFilter('undeleted')">默认显示</a>
+            </li>
+            <li class="mdui-menu-item">
+                <a class="mdui-ripple" ng-click="setDeleteFilter('deleted')">仅显示删除文章</a>
+            </li>
+            <li class="mdui-menu-item">
+                <a class="mdui-ripple" ng-click="setDeleteFilter('all')">显示所有文章</a>
+            </li>
+        </ul>
+        <button class="mdui-btn mdui-ripple mdui-color-theme" mdui-menu="{target: '#article_filter_by_theme_menu', covered: false}">
+            <i class="mdui-icon material-icons">filter_list</i>&nbsp;限定分类
+        </button>
+        <ul class="mdui-menu" id="article_filter_by_theme_menu">
+            <li class="mdui-menu-item">
+                <a class="mdui-ripple" ng-repeat="theme in themes" ng-bind="theme.name" ng-click="setFilter(theme.id)"></a>
+            </li>
+        </ul>
+    </div>
+    <div class="mdui-table-fluid mdui-shadow-0">
+        <table class="mdui-table mdui-table-hoverable">
+            <thead>
+            <tr class="mdui-text-color-theme">
+                <th>编号</th>
+                <th>文章名称</th>
+                <th>所属分类</th>
+                <th>更新日期</th>
+                <!--<th>模块描述</th>-->
+                <th style="width: 130px;text-align: center;"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="news in newsList | filter:{title:keyword} | filter:themefilterCondition |  filter:filterCondition" ng-class="{true: 'del'}[news.deleted]">
+                <td ng-bind="news.id"></td>
+                <td class="mdui-text-truncate" style="max-width: 500px;" ng-bind="news.title"></td>
+                <td ng-bind="themeMap[news.theme].name || '无分类'"></td>
+                <td>{{(news.updated | date:'yyyy-MM-dd HH:mm:ss') || '无记录'}}</td>
+                <td>
+                    <div  class="user-control">
+                        <button class="mdui-btn mdui-btn-icon mdui-ripple novel-config" title="编辑该文章"
+                                ui-sref="article_edit({id: news.id})">
+                            <i class="mdui-icon material-icons">edit</i>
+                        </button>
+                        <button ng-if="!news.deleted" class="mdui-btn mdui-btn-icon mdui-ripple novel-config" title="删除该文章"
+                                ng-click="deleteNews(news)">
+                            <i class="mdui-icon material-icons">delete</i>
+                        </button>
+                        <button ng-if="news.deleted" class="mdui-btn mdui-btn-icon mdui-ripple novel-config" title="恢复该文章"
+                                ng-click="recoverNews(news)">
+                            <i class="mdui-icon material-icons">replay</i>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

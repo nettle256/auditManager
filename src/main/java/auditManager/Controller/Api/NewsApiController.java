@@ -37,7 +37,7 @@ public class NewsApiController {
     ) {
         List<NewsDTO> newsDTOList = new ArrayList<NewsDTO>();
         if (currentUser != null && UserAuthority.checkCurrentUserAuthority(UserAuthority.ARTICLE_SYSTEM, currentUser)) {
-            List<News> newsList = newsRepository.findAllByDeleted(false);
+            List<News> newsList = newsRepository.findAll();
             for (News news: newsList)
                 newsDTOList.add(new NewsDTO(news));
         }
