@@ -1,0 +1,33 @@
+server.port=8079
+
+spring.thymeleaf.prefix=classpath:/templates/
+spring.thymeleaf.suffix=.html
+spring.thymeleaf.encoding=UTF-8
+spring.thymeleaf.content-type=text/html
+spring.thymeleaf.cache=false
+
+spring.datasource.url=jdbc:mysql://localhost:3306/audit_development?characterEncoding=utf8&useSSL=false
+spring.datasource.username=root
+spring.datasource.password=147258
+spring.datasource.driverClassName=com.mysql.jdbc.Driver
+
+# Specify the DBMS
+spring.jpa.database=MYSQL
+# Show or not log for each sql query
+spring.jpa.show-sql=true
+# Hibernate ddl auto (create, create-drop, update)
+spring.jpa.hibernate.ddl-auto=update
+# Naming strategy
+#spring.jpa.hibernate.naming-strategy=org.hibernate.cfg.ImprovedNamingStrategy
+
+# stripped before adding them to the entity manager)
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5Dialect
+
+
+photo.maxWidth=1200
+auditManager.temp.path=F:/KX_Audit/Upload/temp/
+auditManager.photo.path=F:/KX_Audit/Upload/photo/
+auditManager.document.path=F:/KX_Audit/Upload/document/
+
+spring.http.multipart.max-file-size=10MB
+spring.http.multipart.max-request-size=10MB
