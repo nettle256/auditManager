@@ -9,8 +9,8 @@
                 <div class="mdui-textfield-error">模块名称不能为空</div>
             </div>
         </div>
-        <div class="mdui-row" style="padding-top: 0;">
-            <trix-editor angular-trix="" ng-model="mod.content" style="min-height: 600px;"></trix-editor>
+        <div class="mdui-row" style="padding-top: 0;height: 600px;overflow-y: scroll;">
+            <trix-editor angular-trix="" ng-model="mod.content" style="height: 600px;"></trix-editor>
         </div>
         <div class="mdui-row">
             <button class="mdui-btn mdui-ripple mdui-color-theme" ng-click="save()">
