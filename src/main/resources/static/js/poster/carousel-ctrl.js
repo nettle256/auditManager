@@ -46,7 +46,7 @@ auditManagerApp
                     });
                 }, function (result) {
                     mdui.snackbar({
-                        message: '修改图片信息失败'
+                        message: result.status == 416 ? '修改图片信息失败：关联文章不存在' : '修改图片信息失败'
                     });
                 });
         };

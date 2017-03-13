@@ -12,7 +12,9 @@ public class Photo {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private Long idx;
+    private Long connect;
+
+    private Long theme;
 
     @Column(nullable=false)
     private Long uploadId;
@@ -28,14 +30,6 @@ public class Photo {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getIdx() {
-        return idx;
-    }
-
-    public void setIdx(Long idx) {
-        this.idx = idx;
     }
 
     public Long getUploadId() {
@@ -60,5 +54,21 @@ public class Photo {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public Long getConnect() {
+        return connect;
+    }
+
+    public void setConnect(Long connect) {
+        this.connect = connect;
+    }
+
+    public Long getTheme() {
+        return theme;
+    }
+
+    public void setTheme(Long theme) {
+        this.theme = theme;
     }
 }

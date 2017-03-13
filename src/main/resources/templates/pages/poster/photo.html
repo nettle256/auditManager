@@ -15,9 +15,9 @@
             </div>
             <div class="mdui-card-content" style="padding-right: 60px;">
                 <div class="mdui-textfield">
-                    <label class="mdui-textfield-label">播放序号</label>
-                    <input class="mdui-textfield-input" type="text" placeholder="图片播放顺序"
-                           ng-model="photo.index"  ng-blur="save(photo)"  ng-focus="saveOld(photo)"/>
+                    <label class="mdui-textfield-label">关联文章</label>
+                    <input class="mdui-textfield-input" type="text" placeholder="关联文章编号"
+                           ng-model="photo.connect"  ng-blur="save(photo)"  ng-focus="saveOld(photo)"/>
                 </div>
                 <button class="mdui-btn mdui-btn-icon mdui-ripple del-photo" mdui-tooltip="{content:'删除', position: 'top'}"
                         ng-click="deletePhoto(photo)">

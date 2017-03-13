@@ -25,6 +25,8 @@ public class Carousel {
 
     private Long connectId;
 
+    private Long connectTheme;
+
     private Boolean deleted = false;
 
     public Long getId() {
@@ -81,5 +83,13 @@ public class Carousel {
 
     public void setDeleted(Boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public Long getConnectTheme() {
+        return connectTheme;
+    }
+
+    public void setConnectTheme(Long connectTheme) {
+        this.connectTheme = connectTheme;
     }
 }

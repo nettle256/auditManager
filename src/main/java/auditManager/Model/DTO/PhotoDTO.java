@@ -7,14 +7,16 @@ import auditManager.Model.Photo;
  */
 public class PhotoDTO {
     private Long id;
-    private Long index;
+    private Long connect;
+    private Long theme;
     private String imageUrl;
 
     public PhotoDTO() {}
 
     public PhotoDTO(Photo photo) {
         this.id = photo.getId();
-        this.index = photo.getIdx();
+        this.connect = photo.getConnect();
+        this.theme = photo.getTheme();
         this.imageUrl = "/photo/" + photo.getImageUrl();
     }
 
@@ -26,12 +28,20 @@ public class PhotoDTO {
         this.id = id;
     }
 
-    public Long getIndex() {
-        return index;
+    public Long getConnect() {
+        return connect;
     }
 
-    public void setIndex(Long index) {
-        this.index = index;
+    public void setConnect(Long connect) {
+        this.connect = connect;
+    }
+
+    public Long getTheme() {
+        return theme;
+    }
+
+    public void setTheme(Long theme) {
+        this.theme = theme;
     }
 
     public String getImageUrl() {

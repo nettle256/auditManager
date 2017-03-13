@@ -18,9 +18,7 @@ auditManagerApp
         $http
             .get(['api','photo'].join('/'))
             .then(function (result) {
-                $scope.photos = result.data.sort(function (a, b) {
-                    return a.index > b.index;
-                });
+                $scope.photos = result.data;
             }, function () {
 
             });
@@ -30,11 +28,11 @@ auditManagerApp
         };
 
         $scope.saveOld = function (photo) {
-            photo.oldIndex = photo.index;
+            photo.oldConnect = photo.connect;
         };
 
         $scope.save = function (photo) {
-            if (photo.oldIndex == photo.index)
+            if (photo.oldConnect == photo.connect)
                 return ;
             $http
                 .put(['api','photo',photo.id].join('/'), photo)
@@ -44,7 +42,7 @@ auditManagerApp
                     });
                 }, function (result) {
                     mdui.snackbar({
-                        message: '修改图片信息失败'
+                        message: result.status == 416 ? '修改图片信息失败：关联文章不存在' : '修改图片信息失败'
                     });
                 });
         };

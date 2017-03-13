@@ -25,6 +25,9 @@ public class PhotoApiController {
     @Autowired
     private  PhotoRepository photoRepository;
 
+    @Autowired
+    private NewsRepository newsRepository;
+
     @RequestMapping(value = "", method = RequestMethod.GET)
     private @ResponseBody
     List<PhotoDTO> getPhotos(
@@ -66,7 +69,14 @@ public class PhotoApiController {
     )   {
         if (currentUser != null && UserAuthority.checkCurrentUserAuthority(UserAuthority.POSTER_SYSTEM, currentUser)) {
             Photo photo = photoRepository.findById(id);
-            photo.setIdx(photoDTO.getIndex());
+            photo.setConnect(photoDTO.getConnect());
+            if (photo.getConnect() != null && photo.getConnect() != 0L) {
+                News news = newsRepository.findByIdAndDeleted(photo.getConnect(), false);
+                if (news != null) photo.setTheme(news.getTheme());
+                else {
+                    return new ResponseEntity<PhotoDTO>((PhotoDTO) null, HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE);
+                }
+            }
             photoRepository.save(photo);
             return new ResponseEntity<PhotoDTO>(new PhotoDTO(photo), HttpStatus.OK);
         }

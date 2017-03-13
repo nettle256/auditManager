@@ -11,6 +11,7 @@ public class CarouselDTO {
     private String imageUrl;
     private String text;
     private Long connect;
+    private Long theme;
 
     public CarouselDTO() {}
 
@@ -20,6 +21,7 @@ public class CarouselDTO {
         this.imageUrl = "/photo/" + carousel.getImageUrl();
         this.text = carousel.getText();
         this.connect = carousel.getConnectId();
+        this.theme = carousel.getConnectTheme();
     }
 
     public Long getId() {
@@ -60,5 +62,13 @@ public class CarouselDTO {
 
     public void setConnect(Long connect) {
         this.connect = connect;
+    }
+
+    public Long getTheme() {
+        return theme;
+    }
+
+    public void setTheme(Long theme) {
+        this.theme = theme;
     }
 }

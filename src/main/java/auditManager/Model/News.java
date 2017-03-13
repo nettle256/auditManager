@@ -1,5 +1,7 @@
 package auditManager.Model;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 import javax.persistence.*;
 
 /**
@@ -17,6 +19,8 @@ public class News {
 
     private Long updated;
 
+    private String outerUrl;
+
     @Lob
     private String images;
 
@@ -26,6 +30,8 @@ public class News {
     private Long articleId;
 
     private String userName;
+
+    private Boolean useOuter = false;
 
     private Boolean deleted = false;
 
@@ -109,5 +115,22 @@ public class News {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getOuterUrl() {
+        return StringEscapeUtils.unescapeHtml(outerUrl);
+    }
+
+    public void setOuterUrl(String outerUrl) {
+        this.outerUrl = StringEscapeUtils.escapeHtml(outerUrl);
+    }
+
+
+    public Boolean getUseOuter() {
+        return useOuter;
+    }
+
+    public void setUseOuter(Boolean useOuter) {
+        this.useOuter = useOuter;
     }
 }

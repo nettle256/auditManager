@@ -95,6 +95,8 @@ public class NewsApiController {
             }
 
             News news = new News();
+            news.setOuterUrl(newsDTO.getOuterUrl());
+            news.setUseOuter(newsDTO.getUseOuter());
             news.setTitle(newsDTO.getTitle());
             news.setAttachments(newsDTO.getAttachments());
             news.setImages(newsDTO.getImages());
@@ -132,6 +134,8 @@ public class NewsApiController {
                 return new ResponseEntity<NewsDTO>((NewsDTO) null, HttpStatus.BAD_REQUEST);
             }
 
+            news.setOuterUrl(newsDTO.getOuterUrl());
+            news.setUseOuter(newsDTO.getUseOuter());
             news.setTitle(newsDTO.getTitle());
             news.setTheme(newsDTO.getTheme());
             news.setImages(newsDTO.getImages());

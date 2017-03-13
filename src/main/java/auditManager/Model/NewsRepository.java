@@ -9,6 +9,7 @@ import java.util.List;
  */
 public interface NewsRepository extends JpaRepository<News, Long> {
     public News findById(Long id);
+    public News findByIdAndDeleted(Long id, Boolean deleted);
     public List<News> findAllByDeleted(Boolean deleted);
     public List<News> findAllByPublished(Boolean published);
     public List<News> findAllByPublishedAndDeleted(Boolean published, Boolean deleted);

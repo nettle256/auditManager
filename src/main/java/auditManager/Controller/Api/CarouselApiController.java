@@ -25,6 +25,9 @@ public class CarouselApiController {
     @Autowired
     private CarouselRepository carouselRepository;
 
+    @Autowired
+    private NewsRepository newsRepository;
+
     @RequestMapping(value = "", method = RequestMethod.GET)
     private @ResponseBody
     List<CarouselDTO> getCarousels(
@@ -69,6 +72,13 @@ public class CarouselApiController {
             carousel.setIdx(carouselDTO.getIndex());
             carousel.setText(carouselDTO.getText());
             carousel.setConnectId(carouselDTO.getConnect());
+            if (carousel.getConnectId() != null && carousel.getConnectId() != 0L) {
+                News news = newsRepository.findByIdAndDeleted(carousel.getConnectId(), false);
+                if (news != null) carousel.setConnectTheme(news.getTheme());
+                else {
+                    return new ResponseEntity<CarouselDTO>((CarouselDTO) null, HttpStatus.REQUESTED_RANGE_NOT_SATISFIABLE);
+                }
+            }
             carouselRepository.save(carousel);
             return new ResponseEntity<CarouselDTO>(new CarouselDTO(carousel), HttpStatus.OK);
         }

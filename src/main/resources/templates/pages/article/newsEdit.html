@@ -8,64 +8,85 @@
                 <input class="mdui-textfield-input" type="text" ng-model="news.title" required="true"/>
                 <div class="mdui-textfield-error">文章名称不能为空</div>
             </div>
-            <div class="mdui-textfield mdui-col-sm-3" style="padding-right: 0px">
+            <div class="mdui-textfield mdui-col-sm-2" style="padding: 16px 8px 8px 8px;">
                 <label class="mdui-textfield-label">所属栏目</label>
                 <div class="btn-group-in-row">
                     <select class="mdui-btn mdui-btn-block mdui-ripple mdui-color-white btn-select" ng-model="news.theme"
                             ng-options="theme.id as theme.name for theme in themes"></select>
                 </div>
             </div>
-        </div>
-        <div class="mdui-row" style="padding-top: 0;">
-            <trix-editor angular-trix="" ng-model="news.content" style="min-height: 600px;"></trix-editor>
-        </div>
-        <div class="mdui-row" style="padding-top: 0;">
-            <div class="mdui-textfield">
-                <label class="mdui-textfield-label">图片</label>
+            <div class="mdui-textfield mdui-col-sm-1">
+                <label class="mdui-textfield-label">使用外链</label>
+                <div class="btn-group-in-row">
+                    <label class="mdui-switch">
+                        <input type="checkbox" ng-model="news.useOuter"/>
+                        <i class="mdui-switch-icon"></i>
+                    </label>
+                </div>
             </div>
-            <div class="empty" ng-if="!news.attachmentsDTO.length">
-                暂无图片
+        </div>
+        <div ng-if="news.useOuter">
+            <div class="mdui-row"  style="padding-top: 0;">
+                <div class="mdui-textfield mdui-col-sm-12"  style="padding-left: 0px">
+                    <label class="mdui-textfield-label">外链地址</label>
+                    <input class="mdui-textfield-input" type="text" ng-model="news.outerUrl"/>
+                </div>
             </div>
-            <div class="photo-list">
-                <div class="mdui-card mdui-shadow-6" ng-repeat="image in news.imagesDTO">
-                    <div class="mdui-card-media">
-                        <img ng-src="/photo/{{image.uri}}"/>
-                        <div class="mdui-card-menu">
-                            <button class="mdui-btn mdui-btn-icon mdui-color-white"
-                                    ng-click="deletePhoto($index)" title="删除该图片"
-                                ><i class="mdui-icon material-icons">delete</i></button>
+        </div>
+        <div ng-if="!news.useOuter">
+            <div class="mdui-row" style="padding-top: 0;">
+                <trix-editor angular-trix="" ng-model="news.content" style="min-height: 600px;"></trix-editor>
+            </div>
+            <div class="mdui-row" style="padding-top: 0;">
+                <div class="mdui-textfield">
+                    <label class="mdui-textfield-label">图片</label>
+                </div>
+                <div class="empty" ng-if="!news.attachmentsDTO.length">
+                    暂无图片
+                </div>
+                <div class="photo-list">
+                    <div class="mdui-card mdui-shadow-6" ng-repeat="image in news.imagesDTO">
+                        <div class="mdui-card-media">
+                            <img ng-src="/photo/{{image.uri}}"/>
+                            <div class="mdui-card-menu">
+                                <button class="mdui-btn mdui-btn-icon mdui-color-white"
+                                        ng-click="deletePhoto($index)" title="删除该图片"
+                                    ><i class="mdui-icon material-icons">delete</i></button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="mdui-row" style="padding-top: 0;">
-            <div class="mdui-textfield">
-                <label class="mdui-textfield-label">附件</label>
-            </div>
-            <div class="empty" ng-if="!news.attachmentsDTO.length">
-                暂无附件
-            </div>
-            <div class="document-list" ng-if="news.attachmentsDTO.length">
-                <div class="mdui-chip" ng-repeat="attachment in news.attachmentsDTO">
-                    <span class="mdui-chip-title" ng-bind="attachment.name"></span>
-                    <span class="mdui-chip-delete" title="删除该附件" ng-click="deleteAttachment($index)"><i class="mdui-icon material-icons">&#xe5c9;</i></span>
+            <div class="mdui-row" style="padding-top: 0;">
+                <div class="mdui-textfield">
+                    <label class="mdui-textfield-label">附件</label>
+                </div>
+                <div class="empty" ng-if="!news.attachmentsDTO.length">
+                    暂无附件
+                </div>
+                <div class="document-list" ng-if="news.attachmentsDTO.length">
+                    <div class="mdui-chip" ng-repeat="attachment in news.attachmentsDTO">
+                        <span class="mdui-chip-title" ng-bind="attachment.name"></span>
+                        <span class="mdui-chip-delete" title="删除该附件" ng-click="deleteAttachment($index)"><i class="mdui-icon material-icons">&#xe5c9;</i></span>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="mdui-row">
-            <button class="mdui-btn mdui-ripple mdui-color-theme pull-left"
-                    ngf-select="upload($file, 'image')" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="10MB" ng-disabled="uploading">
-                <div ng-if="!uploading"><i class="mdui-icon material-icons">file_upload</i>&nbsp;上传图片</div>
-                <div ng-if="uploading"><i class="mdui-icon material-icons">file_upload</i>&nbsp;上传进度: {{progress}}%</div>
-            </button>
-            <button class="mdui-btn mdui-ripple mdui-color-theme pull-left"
-                    ngf-select="upload($file, 'document')" ngf-max-size="10MB" ng-disabled="uploading">
-                <div ng-if="!uploading"><i class="mdui-icon material-icons">file_upload</i>&nbsp;上传附件</div>
-                <div ng-if="uploading"><i class="mdui-icon material-icons">file_upload</i>&nbsp;上传进度: {{progress}}%</div>
-            </button>
-            <div class="pull-left" style="padding-top: 21px;">
-                上传文件大小不超过10MB
+            <div ng-if="!news.useOuter">
+                <button class="mdui-btn mdui-ripple mdui-color-theme pull-left"
+                        ngf-select="upload($file, 'image')" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="10MB" ng-disabled="uploading">
+                    <div ng-if="!uploading"><i class="mdui-icon material-icons">file_upload</i>&nbsp;上传图片</div>
+                    <div ng-if="uploading"><i class="mdui-icon material-icons">file_upload</i>&nbsp;上传进度: {{progress}}%</div>
+                </button>
+                <button class="mdui-btn mdui-ripple mdui-color-theme pull-left"
+                        ngf-select="upload($file, 'document')" ngf-max-size="10MB" ng-disabled="uploading">
+                    <div ng-if="!uploading"><i class="mdui-icon material-icons">file_upload</i>&nbsp;上传附件</div>
+                    <div ng-if="uploading"><i class="mdui-icon material-icons">file_upload</i>&nbsp;上传进度: {{progress}}%</div>
+                </button>
+                <div class="pull-left" style="padding-top: 21px;">
+                    上传文件大小不超过10MB
+                </div>
             </div>
             <button class="mdui-btn mdui-ripple mdui-color-theme" ng-click="save()">
                 {{isNew ? '提交' : '保存'}}

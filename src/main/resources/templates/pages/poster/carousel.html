@@ -36,8 +36,8 @@
             <div class="mdui-row">
                 <div class="mdui-textfield">
                     <label class="mdui-textfield-label">关联文章</label>
-                    <input class="mdui-textfield-input" type="text" placeholder="点击图片时跳转到制定的文章页面"
-                           ng-model="carousel.connect"/>
+                    <input class="mdui-textfield-input" type="text" placeholder="点击图片时跳转到的文章编号"
+                           ng-model="carousel.connect"   ng-blur="save(carousel)"  ng-focus="saveOld(carousel)"/>
                 </div>
             </div>
         </div>
